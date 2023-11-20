@@ -1,0 +1,250 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "KachatGPT actions",
+    "description": "Execute Kachaka commands using Kachaka API HTTP interfaces",
+    "version": "v0.1.0"
+  },
+  "servers": [
+    {
+      "url": "https://YOUR_AWESOME_NGROK_DOMAIN"
+    }
+  ],
+  "paths": {
+    "/kachaka/get_robot_serial_number": {
+      "get": {
+        "description": "Get the Kachaka's serial number.",
+        "operationId": "GetRobotSerialNumber",
+        "parameters": [],
+        "deprecated": false
+      }
+    },
+    "/kachaka/get_robot_pose": {
+      "get": {
+        "description": "Get the Kachaka's current pose. 'x' and 'y' are 2 dimentional pose in meter. 'theta' is orientation in radian.",
+        "operationId": "GetRobotPose",
+        "parameters": [],
+        "deprecated": false
+      }
+    },
+    "/kachaka/get_locations": {
+      "get": {
+        "description": "Get the location (i.e. destination) list in the house. 'name' is the location's name and 'id' is the key of the location. 'pose.x' and 'pose.y' are 2 dimentional pose in meter. 'pose.theta' is orientation in radian.",
+        "operationId": "GetLocations",
+        "parameters": [],
+        "deprecated": false
+      }
+    },
+    "/kachaka/get_shelves": {
+      "get": {
+        "description": "Get the furniture list in the house. 'name' is the furniture's name and 'id' is the key of the furniture. 'pose.x' and 'pose.y' are 2 dimentional pose in meter. 'pose.theta' is orientation in radian. 'size.width', 'size.depth' and 'size.height' are 3 dimentional size in meter.",
+        "operationId": "GetShelves",
+        "parameters": [],
+        "deprecated": false
+      }
+    },
+    "/kachaka/get_default_location_id": {
+      "get": {
+        "description": "Get the default location (i.e. destination) 'id'. If no 'id' specified in MoveShelf or MoveToLocation, use it.",
+        "operationId": "GetDefaultLocationId",
+        "parameters": [],
+        "deprecated": false
+      }
+    },
+    "/kachaka/front_camera_image.jpeg": {
+      "get": {
+        "description": "Get the JPEG image from the front camera.",
+        "operationId": "GetFrontCameraImage",
+        "parameters": [],
+        "deprecated": true
+      }
+    },
+    "/kachaka/back_camera_image.jpeg": {
+      "get": {
+        "description": "Get the JPEG image from the back camera.",
+        "operationId": "GetBackCameraImage",
+        "parameters": [],
+        "deprecated": true
+      }
+    },
+    "/kachaka/get_object_detection": {
+      "get": {
+        "description": "Get the list of the object detection by the front camera. 'label' indicates 1: a person 2: a furniture, 3: a charging dock, and 4: a door.",
+        "operationId": "GetObjectDetection",
+        "parameters": [],
+        "deprecated": false
+      }
+    },
+    "/kachaka/cancel_command": {
+      "get": {
+        "description": "Cancels the currently executed command.",
+        "operationId": "CancelCommand",
+        "parameters": [],
+        "deprecated": false
+      }
+    },
+    "/kachaka/return_home": {
+      "get": {
+        "description": "Automatically return to charging dock to recharge.",
+        "operationId": "ReturnHome",
+        "parameters": [],
+        "deprecated": false
+      }
+    },
+    "/kachaka/dock_shelf": {
+      "get": {
+        "description": "Put the furniture in front of the Kachaka.",
+        "operationId": "DockShelf",
+        "parameters": [],
+        "deprecated": false
+      }
+    },
+    "/kachaka/undock_shelf": {
+      "get": {
+        "description": "Unload the furniture on the spot.",
+        "operationId": "UndockShelf",
+        "parameters": [],
+        "deprecated": false
+      }
+    },
+    "/kachaka/speak": {
+      "post": {
+        "description": "Speak by Text-to-Speech.",
+        "operationId": "Speak",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "text": { 
+                    "description": "Speech content.",
+                    "type": "string"
+                  }
+                },
+                "required": ["text"] 
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/kachaka/move_shelf": {
+      "post": {
+        "description": "Transport the furniture to its destination.",
+        "operationId": "MoveShelf",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "shelf_name_or_id": { 
+                    "description": "The furniture name or id.",
+                    "type": "string"
+                  },
+                  "location_name_or_id": { 
+                    "description": "The location (i.e. destination) name or id.",
+                    "type": "string"
+                  }
+                },
+                "required": ["shelf_name_or_id"] 
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/kachaka/move_to_location": {
+      "post": {
+        "description": "Move to the destination.",
+        "operationId": "MoveToLocation",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "location_name_or_id": { 
+                    "description": "The location (i.e. destination) name or id.",
+                    "type": "string"
+                  }
+                },
+                "required": ["location_name_or_id"] 
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/kachaka/move_to_pose": {
+      "post": {
+        "description": "Move to the goal current pose. 'x' and 'y' are 2 dimentional pose in meter. 'theta' is orientation in radian.　Note that the origin is the pose of the charging dock.",
+        "operationId": "MoveToPose",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "x": { 
+                    "description": "Forward distance in meter.",
+                    "type": "number"
+                  },
+                  "y": { 
+                    "description": "Distance to the left in meter.",
+                    "type": "number"
+                  },
+                  "yaw": { 
+                    "description": "Orientation in radian",
+                    "type": "number"
+                  }
+                },
+                "required": ["x", "y", "yaw"] 
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    },
+    "/kachaka/set_robot_velocity": {
+      "post": {
+        "description": "",
+        "operationId": "SetRobotVelocity",
+        "parameters": [],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "linear": { 
+                    "description": "Forward speed taking the value of -1~1. 1 is going forward and -1 is going back.",
+                    "type": "number"
+                  },
+                  "angular": { 
+                    "description": "Rotation speed taking the value of -1~1. 1 is turning lef and -1 is turning right.",
+                    "type": "number"
+                  }
+                },
+                "required": ["linear", "angular"] 
+              }
+            }
+          }
+        },
+        "deprecated": false
+      }
+    }
+  },
+  "components": {
+    "schemas": {}
+  }
+}
